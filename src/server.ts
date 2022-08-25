@@ -2,7 +2,6 @@ import express from 'express';
 import { Router, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
-import { ALLOW_SAME_ORIGIN } from 'express-csp-header';
 
 (async () => {
 
@@ -34,64 +33,28 @@ import { ALLOW_SAME_ORIGIN } from 'express-csp-header';
 
   app.get('/filteredImage',async (req: Request, res: Response) => {
     
-    const image_url = req.query.image_url.toString();
+    let {image_url } = req.query;
     if (!image_url) {
       return res.status(400).send('Provide image url')
     }
-    const filteredImage = await filterImageFromURL(image_url);
+    /* if (!function validateUrl (image_url: string) {
+        
+        if (typeof image_url !== 'string') {
+          return false;
+          }
+          return (image_url.match(/^http[^\?]*.(jpg|jpeg|gif|png|tiff|bmp)(\?(.*))?$/gmi) !== null);
+      }) */
+     
+      
+        
+      const filteredImage = await filterImageFromURL(image_url);
 
-    res.status(200).sendFile(filteredImage, () =>{
-      deleteLocalFiles([filteredImage])
-    });
+        res.status(200).sendFile(filteredImage, () =>{
+          deleteLocalFiles([filteredImage])
+        });
   });
 
 
-/*   app.get( "/filteredimage/?image_url={{URL}}", async ( req: Request, res: Response) => {
-    let { image_url }  = req.query;
-
-    if ( !image_url || !(function validateUrl (image_url: string) {
-        
-      if (typeof image_url !== 'string') {
-        return false;
-        }
-        return (image_url.match(/^http[^\?]*.(jpg|jpeg|gif|png|tiff|bmp)(\?(.*))?$/gmi) !== null);
-      })) {
-          return res.status(400).send({
-          message: 'Please provide a valid image url'
-          })
-        }
-    })
-
-    const filteredImage = await (filterImageFromURL (image_url)); */
-
-    /* app.get( "/filteredimage/?image_url={{URL}}", async ( req: Request, res: Response) => {
-
-      let { image_url } = req.query;
-  
-        //validates image url 
-  
-      if ( !image_url ) {
-              return res.status(400).send({
-              message: 'Please provide a valid image url'
-            })
-          }
-    
-        const filteredImage = await filterImageFromURL(image_url);
-
-        res.status(200).sendFile(filteredImage, () => {
-          deleteLocalFiles([filteredImage])
-        })
-    
-        if (filteredImage === null || filteredImage === undefined) {
-          res.status(401).send({
-            message: 'Unable to filter image'
-          })
-        }
-        res.on('finish', function () {deleteLocalFiles([filteredImage]) });
-        
-        return res.status(200).sendFile(''+filteredImage);
-  
-    }) */
 
   //! END @TODO1
   
