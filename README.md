@@ -35,6 +35,8 @@ Follow the process described in the course to `eb init` a new application and `e
 # My ElasticBeanstalk Endpoint 
 http://udagram-image-filter-dev222222.us-east-1.elasticbeanstalk.com/filteredimage?image_url=https://ichef.bbci.co.uk/onesport/cps/800/cpsprodpb/5EBE/production/_126445242_6f6e81ec-4548-4dac-b2aa-5ea7a23f9b16.jpg
 
+Note: This endpoint will no longer worker as the server has been terminated
+
 
 
 ## Stand Out (Optional)
